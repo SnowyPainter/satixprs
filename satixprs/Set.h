@@ -7,6 +7,11 @@ enum class SetType {
 	Inf = -1,
 	Fin
 };
+enum class Calculate {
+	Sum,
+	Intersection,
+	Difference
+};
 template <typename T>
 struct Content {
 	std::vector<T> vec;
@@ -75,6 +80,17 @@ public:
 		for (T x : values)
 			Add(x);
 	}
+	Set<T> Cal(Calculate cal, Set<T> set) {
+		switch (cal) {
+		case Calculate::Sum:
+			return Sum(set);
+		case Calculate::Intersection:
+			return Intersection(set);
+		case Calculate::Difference:
+			return Difference(set);
+		}
+		return Set<T>(0, "Empty");
+	}
 	Set<T> Sum(Set<T> set) {
 		Set<T> result = *this;
 		result.Name = this->Name + "¡ú" + set.Name;
@@ -118,10 +134,16 @@ public:
 		else 
 			for (int i = 0; i < Capacity; i++) 
 				values.push_back(content.finarr[i]);
+		
+		int i = 0, size = values.size();
+		if (size <= i) {
+			std::cout << Name << " = Empty" << std::endl;
+			return;
+		}
 		std::cout << Name << " = { ";
-		int i = 0;
-		for (; i < values.size() - 1; i++)
+		for (; i < size - 1; i++)
 			std::cout << values[i] << ", ";
+		
 		std::cout << values[i] << " }" << std::endl;
 	}
 };
